@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM</title>
+    <style>
+        body {
+            background: lightblue;
+        }
+        div {
+            display: flex;
+            justify-content: center;
+        }
+        span {
+            font-size: 70px;
+        }
+        p{
+            font-size: 48px;
+            text-align: center;
+            margin:50px;
+        }
+        #container {
+            display: flex;
+            justify-content: center;
+        }
+        input[type = 'button'] {
+            background: darkblue;
+            color: white;
+            font-weight: bolder;
+            width: 150px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            border: 0px;
+        }
+        input[type = 'button']:hover {
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <span id="minutes">00</span>
+        <span>:</span>
+        <span id="second">00</span>
+    </div>
+    <p>Нажмите кнопку старт, и начнеться отсчет секунд</p>
+    <div id="container">
+        <input type="button" value="Start" id="start">
+        <input type="button" value="Stop" id="stop">
+        <input type="button" value="Reset" id="reset">
+    </div>
+<script>
+    var $second = document.getElementById('second');
+    var $minutes = document.getElementById('minutes');
+    var $start = document.getElementById('start');
+    var $stop = document.getElementById('stop');
+    var $reset = document.getElementById('reset');
+    var second = 0;
+    var minutes = 0;
+    var timerStop;
+    $start.addEventListener('click', function () {
+        if (timerStop) {
+            clearInterval(timerStop);
+            second = 0;
+            minutes = 0;
+            $minutes.innerHTML = '00';
+            $second.innerHTML = '00';
+        }
+        timerStop = setInterval(function () {
+            second++;
+            if (second > 59) {
+                second = 0;
+                minutes++;
+            }
+            if (second < 10) {
+                $second.innerHTML = '0' + second;
+            } else {
+                $second.innerHTML = second;
+            }
+            if (minutes < 10) {
+                $minutes.innerHTML = '0' + minutes;
+            } else {
+                $minutes.innerHTML = minutes;
+            }
+        }, 1000);
+    });
+
+    $stop.addEventListener('click',function () {
+        clearInterval(timerStop);
+    });
+
+    $reset.addEventListener('click', function () {
+        second = 0;
+        minutes = 0;
+        $second.innerHTML ='0' + second;
+        $minutes.innerHTML = '0' + minutes;
+        clearInterval(timerStop);
+    });
+</script>
+</body>
+</html>
